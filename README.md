@@ -1,7 +1,7 @@
 # Verilog_Code
 
 ## Contents
-- [Procedural Assignment](#ProceduralAssignment)
+- [Procedural Assignment](#Procedural-Assignment)
 - [User-Define Primitives](#User-Defined-Primitives-(UDP))
 - [Modeling Finite State Machines](#Modeling-Finite-State-Machines)
 - [Verilog Testbench](#Verilog-Testbench)
@@ -391,7 +391,7 @@ endmodule
 
 Breaking down 16:1 MUX from behavioral to structural behavioral logic
 
-```v
+```Verilog
 /*** MULTIPLEXER 16 to 1 ***/
 `timescale 1ns / 1ps
 
@@ -431,7 +431,7 @@ module mux_16to1(in, sel, out);
 endmodule
 ```
 ### Testbench
-```v
+```Verilog
 /*** Verilog Testbench : MULTIPLEXER 16 to 1 ***/
 `timescale 1ns / 1ps
 
