@@ -38,112 +38,6 @@
 - (10) or "f" represents the Falling edge.
 - "*" indicates any value change in the signal.
 
-### UDP Combinational circuits
----
-
-```Verilog
-/*** Full Adder sum generated using UDP ***/
-primitive udp_sum (sum, a, b, c);
-    input a, b, c;
-    output sum;
-    table
-    // a b c  sum
-       0 0 0 : 0;
-       0 0 1 : 1;
-       0 1 0 : 1;
-       0 1 1 : 0;
-       1 0 0 : 1;
-       1 0 1 : 0;
-       1 1 0 : 0;
-       1 1 1 : 1;
-    endtable
-endprimitive
-```
-```Verilog
-/*** Full Adder Carry generated using UDP ***/
-primitive udp_carry (cout, a, b, c);
-    input a, b, c;
-    output cout;
-    table
-    //  a b c  cout
-        0 0 ? : 0;
-        0 ? 0 : 0;
-        ? 0 0 : 0;
-        1 1 ? : 1;
-        1 ? 1 : 1;
-        ? 1 1 : 1;
-    endtable
-endprimitive
-```
-```verilog
-/*** Instantiating UDP's FULL ADDER ***/
-module full_adder (sum, cout, a, b, c);
-    input a, b, c;
-    output sum, cout;
-
-    udp_sum SUM (sum, a, b, c);
-    udp_carry CARRY (cout, a, b, c);
-endmodule
-```
-### UDP Sequential Circuits
-
-```verilog
-/*** UDP D-latch ***/
-primitive udp_dlatch (q, d, clk, clr);
-    input d, clk, clr;
-    output reg d;
-
-    initial 
-        q = 0; // optional
-
-    table 
-    // d clk clr  q  q_new
-        ?  ?  1 : ? : 0;    // clear
-        0  1  0 : ? : 0;    // reset
-        1  1  0 : ? : 1;    // set
-        ?  0  0 : ? : -;    // Memory
-    endtable
-endprimitive
-```
-
-```verilog
-/*** UDP T Flipflop ***/
-primitive udp_t_ff (q, clk, clr);
-    input clk, clr;
-    output reg q;
-
-    table
-    // clk clr  q  q_new
-        ?    1 : ? : 0;     // clear
-        ?  (10): ? : -;     // 1 to 0 clear falling edge Hold Prev state
-      (10)   0 : 0 : 1;     // 1 to 0 clk falling edge Toggle state
-      (10)   0 : 1 : 0;     
-      (0?)   0 : ? : -;     // 0 to ? clk leading edge Hold prev state
-```
-
-```verilog
-/*** UDP negative edge JK-flipflop ***/
-primitive udp_jk_ff (q, s, r, clk, clr);
-    input s, r, clk, clr;
-    output reg q;
-
-    initial
-        q = 0; // optional
-    
-    table
-    //  s  r  clk clr  q  q_new
-        ?  ?   ?   1 : ? : 0;   // clear
-        ?  ?   ? (10): ? : -;
-        0  0 (10)  0 : ? : -;
-        0  1 (10)  0 : ? : 0;   // reset
-        1  0 (10)  0 : ? : 1;   // set
-        1  1 (10)  0 : 0 : 1;   // toggle
-        1  1 (10)  0 : 1 : 0;
-        ?  ? (01)  0 : ? : -;
-    endtable
-endprimitive
-```
-
 # Modeling Finite State Machines
 
 - Combinational and Sequential Circuits
@@ -162,7 +56,7 @@ endprimitive
 ### Examples of Moore Machine
 ---
 ### Example 1
-Traffic light with three lamps states RED, GREEN, & YELLOW and inputs are null, a transition occurs with the clock signals.
+The traffic light with three lamps states RED, GREEN, & YELLOW and inputs are null, a transition occurs with the clock signals.
 #### Verilog code
 ```Verilog
 /***
@@ -220,9 +114,9 @@ endmodule
 
 #### Example 2
 ---
-Serial Parity Detector, stream of bits fed in synchronism with clock. 0 indicate "EVEN number of 1's seen so far" and 1 indicate "ODD number of 1's seen so far".
+Serial Parity Detector, stream of bits fed in synchronism with the clock. 0 indicates "EVEN number of 1's seen so far" and 1 indicates "ODD number of 1's seen so far".
 #### Verilog code
-```verilog
+```Verilog
 module parity (out, clk, in);
     input in, clk;
     output reg out;
