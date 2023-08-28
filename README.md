@@ -359,3 +359,8 @@ module muxtest;
     end
 endmodule
 ```
+# Data Path and Controller Design
+- Data Path contains functional units where all computations are carried out.
+   * registers, multiplexers, bus, adders, multipliers, counters and other functional blocks.
+- Control Path implements a finite state machine and provides control signals to the data path in proper sequence.
+- In response to control signals various operations are carried out by data path.
