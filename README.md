@@ -12,12 +12,22 @@
 ## Procedural Assignment
 - Procedural Assignment statement update variables of type "reg", "integer", "real" or "time", here "Net" type variables are not used.  
 - The value assigned to the variable remains unchanged until another procedural assignment statement assigns a new value to the variable.
-* Blocking ( = )
-    - Blocking assignments execute step by step sequentially.
-    - Blocking assignments do not block statements in other always blocks but the order of execution may change according to simulation. 
-* Non-Blocking ( <= ) 
-    - Non-blocking assignments execute concurrently.
-    - Assignments to the target scheduled at the end of the simulation cycle.
+   * Blocking ( = )
+       - Blocking assignments execute step by step sequentially.
+       - Blocking assignments do not block statements in other always blocks but the order of execution may change according to simulation.
+       - For Sequential execution of statement `begin ... end ` blocks are used.
+       - For Parallel execution of statements `fork ... join ` blocks are used.
+   * Non-Blocking ( <= ) 
+       - Non-blocking assignments execute concurrently.
+       - Assignments to the target scheduled at the end of the simulation cycle.
+- Structured Procedures
+   * Initial and Always blocks
+     Functions | Task
+      -- | -- 
+     Only Combinational | both Combinational and sequential
+     1 to inf inputs and only 1 output | 0 to inf input, output, inouts
+     Functions cannot have Delays | Task can have Delays
+     One function can call another function but cannot call task | One task can call both function and task
 
 ## User-Defined Primitives (UDP)
 - Used to define custom Verilog primitives by the use of lookup tables.
